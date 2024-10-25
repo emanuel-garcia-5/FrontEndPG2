@@ -1,6 +1,30 @@
 import React from 'react'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFire, faWater, faWind, faTruckMedical, faPeopleGroup } from '@fortawesome/free-solid-svg-icons';
+import mapboxgl from 'mapbox-gl';
+
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+
 export const Publico = () => {
+
+  const mapContainerRef = useRef();
+  const mapRef = useRef();
+
+  useEffect(() => {
+    // TO MAKE THE MAP APPEAR YOU MUST
+    // ADD YOUR ACCESS TOKEN FROM
+    // https://account.mapbox.com
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZW1hbnVlbC1nYXJjaWEtNSIsImEiOiJjbTJrMDhidm8wYm9oMnBwc3l4ZmFsdzBkIn0.Rh19imwFpsPD6SYSXL_NGA';
+
+    mapRef.current = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      center: [-74.5, 40], // starting position [lng, lat]
+      zoom: 9 // starting zoom
+    });
+  });
   return (
     <div className="font-sans">
     {/* Header */}
@@ -49,28 +73,20 @@ export const Publico = () => {
     </section>
 
     {/* Equipo */}
-    <section id="team" className="py-12">
-      <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-6">Nuestro Equipo</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 shadow-md rounded">
-            <img src="/images/firefighter1.jpg" alt="Miembro del equipo" className="w-full h-40 object-cover rounded-md"/>
-            <h3 className="text-xl font-bold mt-4">Capitán Juan Pérez</h3>
-            <p>Especialista en rescate en alturas.</p>
-          </div>
-          <div className="bg-white p-6 shadow-md rounded">
-            <img src="/images/firefighter2.jpg" alt="Miembro del equipo" className="w-full h-40 object-cover rounded-md"/>
-            <h3 className="text-xl font-bold mt-4">Bombero María López</h3>
-            <p>Experta en control de incendios.</p>
-          </div>
-          <div className="bg-white p-6 shadow-md rounded">
-            <img src="/images/firefighter3.jpg" alt="Miembro del equipo" className="w-full h-40 object-cover rounded-md"/>
-            <h3 className="text-xl font-bold mt-4">Bombero Pedro González</h3>
-            <p>Primeros auxilios y rescate vehicular.</p>
-          </div>
-        </div>
+    <div className="grid grid-cols-3 gap-4">
+      <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <FontAwesomeIcon icon={faTruckMedical} className="mr-2" />
+        Emergencias atendidas: 45
       </div>
-    </section>
+      <div className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        <FontAwesomeIcon icon={faFire} className="mr-2" />
+        Incendios atendidos: 8
+      </div>
+      <div className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+        <FontAwesomeIcon icon={faPeopleGroup} className="mr-2" />
+        Elementos activos: 1500
+      </div>
+    </div>
 
     {/* Contacto */}
     <section id="contact" className="py-12 bg-gray-100">
@@ -92,8 +108,12 @@ export const Publico = () => {
           <button type="submit" className="w-full bg-red-700 text-white py-2 rounded-md">Enviar</button>
         </form>
       </div>
+      <div
+      style={{ height: '100%' }}
+      ref={mapContainerRef}
+      className="map-container"
+    />
     </section>
-
     {/* Footer */}
     <footer className="bg-red-700 text-white py-4">
       <div className="container mx-auto text-center">

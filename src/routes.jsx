@@ -5,18 +5,24 @@ import {
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
+  TruckIcon,
+  CubeTransparentIcon
 } from "@heroicons/react/24/solid";
-import { Home, Profile, Tables, Notifications } from "@/pages/dashboard";
+import { Home, PersonalComponent, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Publico } from "./pages/main/publico";
-
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faSuitcaseMedical} from "@fortawesome/free-solid-svg-icons"
+import Vehiculos from "./pages/dashboard/vehiculos";
+import Recursos from "./pages/dashboard/recursos";
+import { Despachos } from "./pages/dashboard/despachos";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
 
 export const routes = [
   {
-    layout: "Dashboard",
+    layout: "dashboard",
     pages: [
       {
         icon: <HomeIcon {...icon} />,
@@ -26,13 +32,13 @@ export const routes = [
       },
       {
         icon: <UserCircleIcon {...icon} />,
-        name: "usuarios",
+        name: "Personal",
         path: "/profile",
-        element: <Profile />,
+        element: <PersonalComponent />,
       },
       {
         icon: <TableCellsIcon {...icon} />,
-        name: "estadisticas",
+        name: "estadisticas y reportes",
         path: "/tables",
         element: <Tables />,
       },
@@ -42,6 +48,24 @@ export const routes = [
         path: "/notifications",
         element: <Notifications />,
       },
+      {
+        icon: <TruckIcon {...icon}/>,
+        name: "Vehiculos",
+        path: "/vehiculos",
+        element: <Vehiculos />
+      },
+      {
+        icon: <FontAwesomeIcon icon={faSuitcaseMedical} />,
+        name: "Recursos",
+        path: "/recursos",
+        element: <Recursos />
+      },
+      {
+        icon: <CubeTransparentIcon {...icon}/>,
+        name: "Despachos",
+        path: "/despachos",
+        element: <Despachos />
+      }
     ],
   },
   {

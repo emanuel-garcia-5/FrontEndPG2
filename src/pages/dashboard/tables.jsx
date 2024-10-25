@@ -1,19 +1,153 @@
 import {
-  Card,
-  CardHeader,
-  CardBody,
   Typography,
-  Avatar,
-  Chip,
-  Tooltip,
-  Progress,
 } from "@material-tailwind/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import React from "react";
+import { UserGroupIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
+import { StatisticsCard } from "@/widgets/cards"
+import {StatisticsChart} from "@/widgets/charts"
+import { chartsConfig } from "@/configs";
+import { loadEmergencias } from "@/api/cruds";
+import { useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
+import ChartToPDF from "@/widgets/componentes/chartToPdf";
+
+
 
 export function Tables() {
+
+  const [emergencias, setEmergencias] = useState([])
+
+  const footer = {
+    color: "text-green-500",
+    value: "+55%",
+    label: "than last week",
+  }
+
+  const {token} = useAuth()
+
+  function contarPorMes(emergencias) {
+    const contadorMeses = Array(12).fill(0); // Arreglo para contar los meses, desde enero (índice 0) a diciembre (índice 11)
+
+    emergencias.forEach(emergencia => {
+        const fecha = new Date(emergencia.FechaHoraReporte);
+        const mes = fecha.getUTCMonth(); // Obtiene el mes (0 = enero, 11 = diciembre)
+        contadorMeses[mes]++; // Incrementa el contador para ese mes
+    });
+
+    return contadorMeses;
+}
+
+useEffect(()=>{
+  const fetchEmergencias = async () => {
+    try{
+      const res = await loadEmergencias({headers: {'x-token': token}});
+
+      const emerArray = contarPorMes(res.data);
+  
+      setEmergencias(emerArray)
+    }catch(err){
+      console.log(err)
+    }
+   
+  }
+
+  fetchEmergencias();
+},[])
+
+
+  const dailySalesChart = {
+    type: "line",
+    height: 220,
+    series: [
+      {
+        name: "Emergencias",
+        data: emergencias,
+      },
+    ],
+    options: {
+      ...chartsConfig,
+      colors: ["#b71c1c"],
+      stroke: {
+        lineCap: "round",
+      },
+      markers: {
+        size: 5,
+      },
+      xaxis: {
+        ...chartsConfig.xaxis,
+        categories: [
+          "Ene",
+          "Feb",
+          "Mar",
+          "Abr",
+          "May",
+          "Jun",
+          "Jul",
+          "Ago",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dic",
+        ],
+      },
+    },
+  };
+
+  const chartData = {
+    color: "white",
+    title: "Emergencias atendidas",
+    description: "",
+    footer: "just updated",
+    chart: dailySalesChart}
   return (
-    <div className="mt-12 mb-8 flex flex-col gap-12">
+    <div className="mt-12">
+      <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-2">
+       <StatisticsCard
+            key={'1'}
+            value={10}
+            title={'Total de usuarios'}
+            icon={React.createElement(UserGroupIcon, {
+              className: "w-6 h-6 text-white",
+            })}
+            footer={
+              <Typography className="font-normal text-blue-gray-600">
+                <strong className={footer.color}>{''}</strong>
+                &nbsp;{'Same value'}
+              </Typography>
+            }
+          />
+          <StatisticsCard
+            key={'2'}
+            value={10}
+            title={'Total de usuarios'}
+            icon={React.createElement(UserGroupIcon, {
+              className: "w-6 h-6 text-white",
+            })}
+            footer={
+              <Typography className="font-normal text-blue-gray-600">
+                <strong className={footer.color}>{''}</strong>
+                &nbsp;{'Same value'}
+              </Typography>
+            }
+          />
+          </div>
+          <div>
+          <StatisticsChart
+            key={"Emergencias"}
+            {...chartData}
+            footer={
+              <Typography
+                variant="small"
+                className="flex items-center font-normal text-blue-gray-600"
+              >
+                <ClockIcon strokeWidth={2} className="h-4 w-4 text-blue-gray-400" />
+                 &nbsp;{chartData.footer} 
+              </Typography>
+            }
+          />
+          </div>
       {/* <Card>
         <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
           <Typography variant="h6" color="white">
@@ -214,6 +348,8 @@ export function Tables() {
           </table>
         </CardBody>
       </Card> */}
+      <ChartToPDF emergenciasFrom={emergencias}></ChartToPDF>
+      
     </div>
   );
 }

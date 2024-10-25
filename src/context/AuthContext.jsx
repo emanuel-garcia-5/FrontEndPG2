@@ -16,6 +16,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
+    const [token, setToken] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(true)
@@ -45,6 +46,7 @@ export const AuthProvider = ({ children }) => {
 
             setIsAuthenticated(true)
             setUser(res.data)
+            setToken(cookie)
             setLoading(false)
         } catch (error){
             setIsAuthenticated(false)
@@ -74,6 +76,7 @@ export const AuthProvider = ({ children }) => {
         try{
             const res = await loginrequest(user);
             setUser(res.data.usuario)
+            setToken(res.data.token)
             setIsAuthenticated(true)
         }catch (error){
             setErrors(error.response.data.errors)
@@ -83,7 +86,7 @@ export const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ singup, singin, user, isAuthenticated, errors, loading }}>
+        <AuthContext.Provider value={{ singup, singin, user, isAuthenticated, errors, loading, token }}>
             {children}
         </AuthContext.Provider>
     )
