@@ -7,6 +7,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 export const Publico = () => {
 
@@ -37,7 +38,7 @@ export const Publico = () => {
             <li><a href="#services" className="hover:underline">Servicios</a></li>
             <li><a href="#team" className="hover:underline">Equipo</a></li>
             <li><a href="#contact" className="hover:underline">Contacto</a></li>
-            <li><a href="/auth/sign-in" className="hover:underline">Colaboradores</a></li>
+            <li><Link to="/auth/sign-in" className="hover:underline">Colaboradores</Link></li>
           </ul>
         </nav>
       </div>
