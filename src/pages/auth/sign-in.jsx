@@ -47,7 +47,7 @@ const navigate = useNavigate()
               size="lg"
               placeholder="name@mail.com"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              value={''}
+             
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -61,7 +61,7 @@ const navigate = useNavigate()
               size="lg"
               placeholder="********"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              value={''}
+             
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
