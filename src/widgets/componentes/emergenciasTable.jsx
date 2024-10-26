@@ -11,8 +11,6 @@ const TABLE_HEAD = ["Tipo de Emergencias", "Descripcion", "Ubicacion", "Priorida
  
 export function EmergenciasTable({tableRows, onUpdateEstado}) {
 
-    const [despachos, setDespachos] = useState([]);
-    const [selectedDespacho, setSelectedDespacho] = useState('');
 
   return (
     <Card className="h-full w-full overflow-scroll">
@@ -62,33 +60,7 @@ export function EmergenciasTable({tableRows, onUpdateEstado}) {
               </td>
               <td className="p-4 flex items-center gap-2">
               <label>Despacho:</label>
-            <select value={selectedDespacho} onChange={e => setSelectedDespacho(e.target.value)}>
-                <option value="">Selecciona un despacho</option>
-                {despachos.map((despacho) => (
-                    <option key={despacho._id} value={despacho._id}>
-                        {despacho.FechaHoraDespacho} - {despacho.Estado}
-                    </option>
-                ))}
-            </select>
                 {Estado === 'Pendiente' ? (<>
-                    <Typography>
-                    <Tooltip content="Asignar recursos">
-                        <Button variant="text"
-                            color="light-blue"
-                            className="hidden items-center gap-1 px-4 xl:flex normal-case">
-                            <CubeTransparentIcon className="h-5 w-5 text-light-blue-500" />
-                        </Button>
-                        </Tooltip>
-                    </Typography>
-                    <Typography>
-                    <Tooltip content="Asignar personas">
-                        <Button variant="text"
-                            color="brown"
-                            className="hidden items-center gap-1 px-4 xl:flex normal-case">
-                            <UserGroupIcon className="h-5 w-5 text-brown-500" />
-                        </Button>
-                        </Tooltip>
-                    </Typography>
                     <Typography as="a" variant="small" color="blue-gray" className="font-medium">
                       <Tooltip content="Marcar como En Proceso">
                           <Button

@@ -85,7 +85,7 @@ const ChartToPDF = () => {
             tension: 0.1, // Suaviza la línea
           },
           {
-            label: 'Accidentes', // Etiqueta para la línea
+            label: 'Otros', // Etiqueta para la línea
             data: contarEmergenciasPorMesYTipo("Otro"), // Datos para la gráfica de líneas
             backgroundColor: 'rgba(255, 255, 0, 0.2)', // Color de fondo del área bajo la línea
             borderColor: 'rgba(255, 255, 0, 1)', // Color de la línea

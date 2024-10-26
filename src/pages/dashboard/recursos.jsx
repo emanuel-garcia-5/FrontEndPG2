@@ -97,7 +97,6 @@ const Recursos = () => {
             <th className="border border-gray-300 px-4 py-2">Tipo</th>
             <th className="border border-gray-300 px-4 py-2">Nombre</th>
             <th className="border border-gray-300 px-4 py-2">Estado</th>
-            <th className="border border-gray-300 px-4 py-2">Ubicación</th>
             <th className="border border-gray-300 px-4 py-2">Descripción</th>
           </tr>
         </thead>
