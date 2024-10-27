@@ -59,7 +59,6 @@ export function EmergenciasTable({tableRows, onUpdateEstado}) {
                 </Typography>
               </td>
               <td className="p-4 flex items-center gap-2">
-              <label>Despacho:</label>
                 {Estado === 'Pendiente' ? (<>
                     <Typography as="a" variant="small" color="blue-gray" className="font-medium">
                       <Tooltip content="Marcar como En Proceso">
