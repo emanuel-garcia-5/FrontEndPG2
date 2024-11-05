@@ -103,23 +103,9 @@ useEffect(()=>{
     chart: dailySalesChart}
   return (
     <div className="mt-12">
-      <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-2">
+      <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-1">
        <StatisticsCard
             key={'1'}
-            value={10}
-            title={'Total de usuarios'}
-            icon={React.createElement(UserGroupIcon, {
-              className: "w-6 h-6 text-white",
-            })}
-            footer={
-              <Typography className="font-normal text-blue-gray-600">
-                <strong className={footer.color}>{''}</strong>
-                &nbsp;{'Same value'}
-              </Typography>
-            }
-          />
-          <StatisticsCard
-            key={'2'}
             value={10}
             title={'Total de usuarios'}
             icon={React.createElement(UserGroupIcon, {
