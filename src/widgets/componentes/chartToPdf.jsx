@@ -111,13 +111,44 @@ const ChartToPDF = () => {
       };
   }, [loading, emergencias]);
 
+  function contarPorMes(emergencias) {
+    const contadorMeses = Array(12).fill(0); // Arreglo para contar los meses, desde enero (índice 0) a diciembre (índice 11)
+
+    emergencias.forEach(emergencia => {
+        const fecha = new Date(emergencia.FechaHoraReporte);
+        const mes = fecha.getUTCMonth(); // Obtiene el mes (0 = enero, 11 = diciembre)
+        contadorMeses[mes]++; // Incrementa el contador para ese mes
+    });
+
+    return contadorMeses;
+}
+
+
   // Función para generar y descargar el PDF
   const downloadPdf = () => {
     const canvas = chartRef.current;
     const imgData = canvas.toDataURL('image/png'); // Obtener la imagen en Base64
 
+    var porMes = contarPorMes(emergencias)
+
     const pdf = new jsPDF();
     pdf.addImage(imgData, 'PNG', 10, 10, 180, 90); // Agregar imagen al PDF
+    pdf.setFontSize(12); // Tamaño de la fuente
+    pdf.setTextColor(0, 0, 0); // Color del texto en RGB
+    pdf.text('Total de emegencias por mes', 10, 110); 
+    pdf.text(`Enero: ${porMes[0]}`, 10, 120); 
+    pdf.text(`Febreo: ${porMes[1]}`, 10, 130); 
+    pdf.text(`Marzo: ${porMes[2]}`, 10, 140); 
+    pdf.text(`Abril: ${porMes[3]}`, 10, 150); 
+    pdf.text(`Mayo: ${porMes[4]}`, 10, 160); 
+    pdf.text(`Junio: ${porMes[5]}`, 10, 170); 
+    pdf.text(`Julio: ${porMes[6]}`, 10, 180); 
+    pdf.text(`Agosto: ${porMes[7]}`, 10, 190); 
+    pdf.text(`Septiembre: ${porMes[8]}`, 10, 200); 
+    pdf.text(`Octubre: ${porMes[9]}`, 10, 210); 
+    pdf.text(`Noviembre: ${porMes[10]}`, 10, 220); 
+    pdf.text(`Diciembre: ${porMes[11]}`, 10, 230); 
+
     pdf.save('Reporte.pdf'); // Descargar el PDF
   };
 

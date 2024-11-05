@@ -8,24 +8,35 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { infoPublica } from '@/api/cruds';
 
 export const Publico = () => {
 
   const mapContainerRef = useRef();
   const mapRef = useRef();
 
-  useEffect(() => {
-    // TO MAKE THE MAP APPEAR YOU MUST
-    // ADD YOUR ACCESS TOKEN FROM
-    // https://account.mapbox.com
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZW1hbnVlbC1nYXJjaWEtNSIsImEiOiJjbTJrMDhidm8wYm9oMnBwc3l4ZmFsdzBkIn0.Rh19imwFpsPD6SYSXL_NGA';
+  const [data, setData] = useState([]);
 
-    mapRef.current = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      center: [-74.5, 40], // starting position [lng, lat]
-      zoom: 9 // starting zoom
-    });
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const res = await infoPublica();
+
+        setData(res.data)
+       
+      }catch(err){
+        console.log(err)
+      }
+      
+     
+  };
+  fetchData();
+  }, []);
+
+
+
+
   return (
     <div className="font-sans">
     {/* Header */}
@@ -77,15 +88,15 @@ export const Publico = () => {
     <div className="grid grid-cols-3 gap-4">
       <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         <FontAwesomeIcon icon={faTruckMedical} className="mr-2" />
-        Emergencias atendidas: 45
+        Emergencias atendidas: {data.totalEmergencias}
       </div>
       <div className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
         <FontAwesomeIcon icon={faFire} className="mr-2" />
-        Incendios atendidos: 8
+        Incendios atendidos: {data.totalIncendios}
       </div>
       <div className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
         <FontAwesomeIcon icon={faPeopleGroup} className="mr-2" />
-        Elementos activos: 1500
+        Elementos activos: {data.totalPersonal}
       </div>
     </div>
 

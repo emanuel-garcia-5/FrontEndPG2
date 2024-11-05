@@ -19,3 +19,5 @@ export const loadPersonal= (headers) => axios.get('/personal', headers)
 
 export const registerDespacho = ( despacho, headers ) => axios.post('/despacho', despacho, headers)
 export const loadDespachos= (headers) => axios.get('/despacho', headers)
+
+export const infoPublica = () => axios.get('/emergencias/infopublica')
